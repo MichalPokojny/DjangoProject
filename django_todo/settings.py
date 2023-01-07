@@ -19,6 +19,8 @@ import os
 if os.path.isfile("env.py"):
     import env
 os.environ.get("DATABASE_URL")
+
+development = os.environ.get('DEVELOPMENT', False)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,9 +33,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-=5!\
     bvro_zh3hq23i0cqekua1%)23^j4n#hubfm_!qpcs+0s=)x')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development
 
-ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
+if development:
+    ALLOWED_HOSTS = ['localhost']
+else:
+    ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
 
 # Application definition
